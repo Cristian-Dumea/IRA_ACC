@@ -69,10 +69,10 @@ In=eye(4);
 % Perioada de esantionare
 Ts=0.01;
 % Discretizare
-ad = eye(2)+A*Ts;
+ad = eye(2)+A*Ts
 bd = B*Ts+0.5*A*B*Ts;
-cd = [-Ts 0];
-dd = 0;
+cd = [-Ts 0]
+dd = 0
 % [Ad1,Bd1,Cd1,Dd1] = c2dm(A,B,C1,D1,Ts,'zoh');
 % [Ad2,Bd2,Cd2,Dd2] = c2dm(ad,bd,cd,dd,Ts,'zoh');
 
@@ -86,20 +86,19 @@ omegan=6*zeta/tt;
 %% alfa1, alfa2
 alfa1=-2*exp(-zeta*omegan*Ts)*cos(omegan*Ts*sqrt(1-zeta^2));
 alfa2=exp(-2*zeta*omegan*Ts);
-alfa3=exp(-5*omegan*Ts);
 
 %% Polinomul caracteristic
 I1=eye(4);
-Ad1=[ad zeros(2);-Ts*1 0 1 0; 0 0 Ts*1 1];
-Bd1=[bd; 0; 0];
+Ad1=[ad zeros(2);-Ts*1 0 1 0; 0 0 Ts*1 1]
+Bd1=[bd; 0; 0]
 %% Matricea de controlabilitate
-R1=[Bd1 Ad1*Bd1 Ad1*Ad1*Bd1 Ad1*Ad1*Ad1*Bd1];
+R1=[Bd1 Ad1*Bd1 Ad1*Ad1*Bd1 ];
 
 %% Ultima linie a lui R^-1
 R_inv = inv(R1);
-H1 = R_inv(4,:);
+H1 = R_inv(2,:);
 
-P_cr1=(Ad1*Ad1+alfa1*Ad1+alfa2*I1)*(Ad1-alfa3*eye(4))*(Ad1-alfa3*eye(4));
+P_cr1=(Ad1*Ad1+alfa1*Ad1+ alfa2*I1)
 
 %% Matricea de reactie dupa stare cu integrator
 fi=-1 * H1 * P_cr1;
