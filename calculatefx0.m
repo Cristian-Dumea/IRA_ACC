@@ -73,9 +73,6 @@ ad = eye(2)+A*Ts;
 bd = B*Ts+0.5*A*B*Ts;
 cd = [-Ts 0];
 dd = 0;
-% [Ad1,Bd1,Cd1,Dd1] = c2dm(A,B,C1,D1,Ts,'zoh');
-% [Ad2,Bd2,Cd2,Dd2] = c2dm(ad,bd,cd,dd,Ts,'zoh');
-
 
 %% Date
 sigma=0.043;
@@ -107,3 +104,8 @@ K1 = fi(1);
 K2 = fi(2);
 K3 = fi(3);
 K4 = fi(4);
+
+%% Regulator FeedFW
+N = 10;
+numff = [Tau 1];
+denff = [(Tau/N)*K K];
