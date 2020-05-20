@@ -42,6 +42,9 @@ KP_M = KU*6;
 KI_M = KP_M/TI_M;
 KD_M = KP_M*TD_M;
 
+%% Regulator PI Cruise Control - folosit pentru eliminarea regulatorului
+
+
 %% Regulator PID Adaptive Cruise Control - Facut de mana
 KU_ACC = 1;
 D = 50; % distanta de referinta
@@ -109,3 +112,37 @@ K4 = fi(4);
 N = 10;
 numff = [Tau 1];
 denff = [(Tau/N)*K K];
+
+%% Analiza Rezultatelor (Viteza)
+output_speed = simout.get();
+reference_speed_data = output_speed.Data(3009:length(output_speed.Time), 1);
+head_speed_data = output_speed.Data(3009:length(output_speed.Time), 2);
+second_speed_data = output_speed.Data(3009:length(output_speed.Time), 3);
+third_speed_data = output_speed.Data(3009:length(output_speed.Time), 4);
+fourth_speed_data = output_speed.Data(3009:length(output_speed.Time), 5);
+fifth_speed_data = output_speed.Data(3009:length(output_speed.Time), 6);
+time = output_speed.Time(3009:length(output_speed.Time))-30;
+
+%% Deviatia medie fata de referinta a vitezei fiecarui vehicul exprimata in km/h in 10 minute
+med_speed_head = (sum(abs(reference_speed_data - head_speed_data)))/length(time)
+med_speed_second = (sum(abs(reference_speed_data - second_speed_data)))/length(time)
+med_speed_third = (sum(abs(reference_speed_data - third_speed_data)))/length(time)
+med_speed_fourth = (sum(abs(reference_speed_data - fourth_speed_data)))/length(time)
+med_speed_fifth = (sum(abs(reference_speed_data - fifth_speed_data)))/length(time)
+
+
+%% Analiza Rezultatelor (Distanta)
+output_distance = simout1.get();
+reference_distance_data = output_distance.Data(3009:length(output_distance.Time), 5);
+second_distance_data = output_distance.Data(3009:length(output_distance.Time), 1);
+third_distance_data = output_distance.Data(3009:length(output_distance.Time), 2);
+fourth_distance_data = output_distance.Data(3009:length(output_distance.Time), 3);
+fifth_distance_data = output_distance.Data(3009:length(output_distance.Time), 4);
+time = output_distance.Time(3009:length(output_distance.Time))-30;
+
+
+%% Deviatia medie fata de referinta a distantei dintre vehicule exprimata in metri in 10 minute
+med_distance_second = (sum(abs(reference_distance_data - second_distance_data)))/length(time)
+med_distance_third = (sum(abs(reference_distance_data - third_distance_data)))/length(time)
+med_distance_fourth = (sum(abs(reference_distance_data - fourth_distance_data)))/length(time)
+med_distance_fifth = (sum(abs(reference_distance_data - fifth_distance_data)))/length(time)
